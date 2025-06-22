@@ -26,11 +26,11 @@ class Fic(db.Model):
     tags = db.Column(db.Text, nullable=True)
     status = db.Column(db.String(50), nullable=True)
     date_published = db.Column(db.String(50), nullable=True)
-    content = db.Column(db.Text, nullable=False)
     source_url = db.Column(db.String(500), nullable=True)
     
     # Campos do usuário
     date_read = db.Column(db.Date, nullable=True)
     comment = db.Column(db.String(500), nullable=True)
+    rating = db.Column(db.Integer, nullable=True) # NOVA COLUNA
     
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

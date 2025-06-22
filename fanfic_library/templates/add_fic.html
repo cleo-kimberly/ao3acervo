@@ -1,21 +1,15 @@
 {% extends "base.html" %}
-
 {% block title %}Adicionar Fanfic{% endblock %}
 {% block header %}Adicionar Nova Fanfic{% endblock %}
-
 {% block content %}
 <div class="add-fic-forms">
     <div class="form-container">
         <h2>Importar via URL do AO3</h2>
-        <p>Cole a URL completa da fanfic para importá-la automaticamente.</p>
         <form method="POST" action="{{ url_for('add_fic') }}">
-            {{ url_form.csrf_token }}
+            {{ url_form.hidden_tag() }}
             <div class="form-group">
                 {{ url_form.url.label }}
                 {{ url_form.url(class="form-control", placeholder="https://archiveofourown.org/works/...") }}
-                 {% for error in url_form.url.errors %}
-                    <span class="error">{{ error }}</span>
-                {% endfor %}
             </div>
             <button type="submit" name="submit_url" class="btn btn-primary">Importar</button>
         </form>
@@ -23,41 +17,16 @@
     
     <div class="form-container">
         <h2>Adicionar Manualmente</h2>
-        <p>Preencha os campos para adicionar uma fanfic que não está no AO3 ou para upload manual.</p>
         <form method="POST" action="{{ url_for('add_fic') }}">
-             {{ manual_form.csrf_token }}
-            <div class="form-group">
-                {{ manual_form.title.label }}
-                {{ manual_form.title(class="form-control") }}
-            </div>
-            <div class="form-group">
-                {{ manual_form.author.label }}
-                {{ manual_form.author(class="form-control") }}
-            </div>
-            <div class="form-group">
-                {{ manual_form.fandom.label }}
-                {{ manual_form.fandom(class="form-control") }}
-            </div>
-            <div class="form-group">
-                {{ manual_form.relationship.label }}
-                {{ manual_form.relationship(class="form-control") }}
-            </div>
-            <div class="form-group">
-                {{ manual_form.summary.label }}
-                {{ manual_form.summary(class="form-control", rows=4) }}
-            </div>
-            <div class="form-group">
-                {{ manual_form.tags.label }}
-                {{ manual_form.tags(class="form-control") }}
-            </div>
-            <div class="form-group">
-                {{ manual_form.status.label }}
-                {{ manual_form.status(class="form-control") }}
-            </div>
-            <div class="form-group">
-                {{ manual_form.content.label }}
-                {{ manual_form.content(class="form-control", rows=10) }}
-            </div>
+             {{ manual_form.hidden_tag() }}
+            <div class="form-group"><label>Título</label>{{ manual_form.title(class="form-control") }}</div>
+            <div class="form-group"><label>Autor(a)</label>{{ manual_form.author(class="form-control") }}</div>
+            <div class="form-group"><label>Fandom(s)</label>{{ manual_form.fandom(class="form-control") }}</div>
+            <div class="form-group"><label>Relacionamento Principal</label>{{ manual_form.relationship(class="form-control") }}</div>
+            <div class="form-group"><label>URL da Fanfic</label>{{ manual_form.source_url(class="form-control") }}</div>
+            <div class="form-group"><label>Sumário</label>{{ manual_form.summary(class="form-control", rows=4) }}</div>
+            <div class="form-group"><label>Tags</label>{{ manual_form.tags(class="form-control") }}</div>
+            <div class="form-group"><label>Status</label>{{ manual_form.status(class="form-control") }}</div>
              <button type="submit" name="submit_manual" class="btn btn-primary">Salvar Manualmente</button>
         </form>
     </div>

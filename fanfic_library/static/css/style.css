@@ -1,16 +1,20 @@
-/* Estilo geral inspirado no AO3 */
+/* Estilo geral - v3+ (Shiplog) */
 :root {
     --primary-color: #990000;
-    --background-color: #f5f5f5;
-    --text-color: #333;
-    --border-color: #ddd;
-    --header-bg: #fff;
-    --sidebar-bg: #fff;
+    --secondary-color: #6a0000;
+    --background-color: #f8f9fa;
+    --surface-color: #ffffff;
+    --text-color: #212529;
+    --text-muted-color: #6c757d;
+    --border-color: #dee2e6;
     --font-serif: 'Lora', 'Georgia', serif;
+    --font-sans: 'Nunito Sans', sans-serif;
+    --border-radius: 8px;
+    --shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
 body {
-    font-family: var(--font-serif);
+    font-family: var(--font-sans);
     margin: 0;
     background-color: var(--background-color);
     color: var(--text-color);
@@ -19,205 +23,418 @@ body {
 
 .container {
     display: flex;
-    max-width: 1600px;
-    margin: 0 auto;
 }
 
 a {
     color: var(--primary-color);
     text-decoration: none;
+    transition: color 0.2s;
 }
 a:hover {
-    text-decoration: underline;
+    color: var(--secondary-color);
 }
 
 /* --- Layout Principal --- */
 .sidebar {
     width: 280px;
-    background-color: var(--sidebar-bg);
+    min-width: 280px;
+    background-color: var(--surface-color);
     border-right: 1px solid var(--border-color);
     padding: 20px;
     height: 100vh;
     position: sticky;
     top: 0;
     overflow-y: auto;
+    box-sizing: border-box;
 }
 
 .main-content {
     flex-grow: 1;
     padding: 20px 40px;
+    box-sizing: border-box;
 }
 
 .main-header {
-    background: var(--header-bg);
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--primary-color);
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+}
+.header-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.main-header h1 {
-    color: var(--primary-color);
-    margin: 0;
-}
-
-.main-header nav a {
-    margin-left: 20px;
-}
-
-/* --- Menu Lateral (Sidebar) --- */
-.sidebar h2 {
-    color: var(--primary-color);
+    padding-bottom: 15px;
     border-bottom: 1px solid var(--border-color);
-    padding-bottom: 10px;
 }
-.fandom-nav ul {
-    list-style: none;
-    padding: 0;
+.main-header h1 {
+    font-family: var(--font-serif);
+    color: #333;
+    margin: 0;
+    font-size: 1.8em;
 }
-.fandom-nav .fandom-name {
-    font-weight: bold;
-    font-size: 1.1em;
+.main-nav a {
+    margin-left: 20px;
+    font-weight: 700;
+}
+
+/* --- Sidebar com Logo --- */
+.sidebar-header {
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #000;
+}
+.sidebar-logo img {
+    height: 40px;
+}
+
+.fandom-nav ul { list-style: none; padding: 0; }
+.fandom-nav details { margin-bottom: 5px; }
+.fandom-nav summary {
+    font-weight: 700;
     cursor: pointer;
-    display: block;
-    margin-top: 15px;
+    padding: 8px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
 }
-.fandom-nav .relationship-list {
-    padding-left: 15px;
-    margin-top: 5px;
-}
-.fandom-nav .relationship-list li a {
+.fandom-nav summary:hover { background-color: #f1f1f1; }
+.fandom-nav .relationship-list a {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 8px 6px 20px;
+    border-radius: 6px;
     font-size: 0.95em;
 }
-
-/* --- Lista de Fics (Página Index) --- */
-.fic-list {
-    list-style: none;
-    padding: 0;
-}
-.fic-list li {
-    background-color: #fff;
-    border: 1px solid var(--border-color);
-    padding: 15px;
-    margin-bottom: 10px;
+.fandom-nav .relationship-list a:hover { background-color: #f1f1f1; }
+.fandom-nav .relationship-list span {
+    background-color: #e9ecef;
+    padding: 1px 6px;
     border-radius: 4px;
-}
-.fic-list .fic-title {
-    font-size: 1.2em;
-    font-weight: bold;
-}
-.fic-list .fic-author {
-    margin-left: 10px;
-    font-style: italic;
-    color: #555;
+    font-size: 0.8em;
 }
 
-/* --- Visualização da Fic --- */
-.fic-container {
-    background-color: #fff;
-    padding: 30px;
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
+/* --- Página Inicial Dedicada --- */
+.home-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--background-color);
 }
-.fic-meta, .user-details {
-    background-color: #f9f9f9;
-    border: 1px solid #eee;
+
+.home-container {
+    text-align: center;
     padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 4px;
 }
-.fic-meta h3, .fic-meta h4, .user-details h4 {
+
+.home-logo {
+    max-width: 300px;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.home-quote {
+    font-family: var(--font-serif);
+    font-size: 1.5em;
+    color: var(--text-color);
     margin-top: 0;
-    color: var(--primary-color);
+    margin-bottom: 40px;
+    max-width: 500px;
+    line-height: 1.4;
 }
-.fic-meta .tags {
-    font-style: italic;
-    color: #666;
-}
-.fic-meta .summary {
-    border-left: 3px solid var(--border-color);
-    padding-left: 15px;
-    font-style: italic;
-}
-.fic-content {
+
+.home-actions .btn {
+    margin: 0 10px;
+    min-width: 150px;
     font-size: 1.1em;
-    line-height: 1.7;
+    padding: 15px 25px;
 }
+
+/* --- Fic Card e Lista --- */
+.fic-list { display: grid; gap: 20px; }
+.fic-card {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+.fic-card-main { flex-grow: 1; }
+.fic-card-actions { flex-shrink: 0; align-self: center; }
+.fic-title { margin: 5px 0; font-family: var(--font-serif); }
+.fic-author, .fic-fandoms { color: var(--text-muted-color); margin: 4px 0; }
+
+.fic-user-details {
+    background-color: #fdf6f6;
+    border-radius: 6px;
+    padding: 12px;
+    margin: 15px 0;
+    border: 1px solid #f8eaea;
+}
+.fic-date-read {
+    font-size: 0.9em;
+    font-weight: 700;
+    color: var(--secondary-color);
+    margin: 0 0 8px 0;
+}
+.fic-comment {
+    font-size: 0.95em;
+    font-style: italic;
+    color: var(--text-color);
+    margin: 0;
+    padding-left: 10px;
+    border-left: 3px solid #e5c3c3;
+    line-height: 1.4;
+}
+.fic-tags { font-style: italic; color: #888; margin: 8px 0; font-size: 0.9em; }
+
+/* --- Avaliação (Estrelas) --- */
+.fic-rating .star, .star-rating-form .star-input { color: #ccc; font-size: 1.5em; cursor: default; }
+.fic-rating .star.filled, .star-rating-form .star-input.filled { color: #ffc107; }
+.star-rating-form .star-input { cursor: pointer; transition: transform 0.1s; }
+.star-rating-form:hover .star-input { color: #ffc107; }
+.star-rating-form .star-input:hover ~ .star-input { color: #ccc; }
+.star-rating-form .star-input:active { transform: scale(0.9); }
+.feedback-message { font-size: 0.9em; margin-top: 5px; height: 1em; }
+.feedback-message.success { color: #28a745; }
+.feedback-message.error { color: #dc3545; }
 
 /* --- Formulários --- */
-.auth-form, .add-fic-forms .form-container {
-    max-width: 500px;
-    margin: 20px auto;
-    padding: 30px;
-    background-color: #fff;
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
+.form-container, .details-container, .auth-form {
+    background-color: var(--surface-color); padding: 30px;
+    border-radius: var(--border-radius); box-shadow: var(--shadow);
 }
-.add-fic-forms {
-    max-width: 100%;
-}
-.add-fic-forms .form-container { margin: 20px 0; }
-.form-group {
-    margin-bottom: 15px;
-}
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; margin-bottom: 5px; font-weight: 700; }
 .form-control {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-family: inherit;
+    width: 100%; padding: 12px; border: 1px solid var(--border-color);
+    border-radius: 6px; box-sizing: border-box; font-family: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-control:focus {
+    border-color: var(--primary-color); outline: none;
+    box-shadow: 0 0 0 3px rgba(153, 0, 0, 0.1);
 }
 .btn {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    font-family: sans-serif;
+    padding: 12px 20px; border: none; border-radius: 6px; cursor: pointer;
+    font-weight: 700; font-family: var(--font-sans);
+    transition: background-color 0.2s, transform 0.1s;
+    display: inline-block; text-align: center;
 }
-.btn-primary {
-    background-color: var(--primary-color);
-    color: white;
-}
-.btn-danger {
-    background-color: #dc3545;
-    color: white;
-    margin-top: 20px;
+.btn:hover { transform: translateY(-1px); }
+.btn-primary { background-color: var(--primary-color); color: white; }
+.btn-primary:hover { background-color: var(--secondary-color); }
+.btn-secondary { background-color: #e9ecef; color: #333; }
+.btn-secondary:hover { background-color: #ced4da; }
+.btn-danger { background-color: #dc3545; color: white; }
+.btn-danger:hover { background-color: #c82333; }
+
+/* --- Outros --- */
+.details-container { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+.fic-meta-card .summary {
+    border-left: 3px solid var(--border-color); padding-left: 15px;
+    font-style: italic; color: var(--text-muted-color);
 }
 
-/* --- Alertas/Flash Messages --- */
-.flash-messages {
-    padding: 0;
-    margin-bottom: 20px;
-}
 .alert {
-    padding: 15px;
-    margin-bottom: 10px;
-    border: 1px solid transparent;
-    border-radius: 4px;
+    padding: 15px; margin-bottom: 20px; border: 1px solid transparent;
+    border-radius: var(--border-radius);
 }
 .alert-success { color: #155724; background-color: #d4edda; border-color: #c3e6cb; }
 .alert-danger { color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; }
-.alert-info { color: #0c5460; background-color: #d1ecf1; border-color: #bee5eb; }
 
-/* --- Estatísticas --- */
+hr { border: none; border-top: 1px solid var(--border-color); margin: 25px 0; }
+
+.empty-state {
+    text-align: center;
+    background-color: var(--surface-color);
+    padding: 60px 20px;
+    border-radius: var(--border-radius);
+    border: 2px dashed var(--border-color);
+}
+.empty-state h3 {
+    font-family: var(--font-serif);
+    margin-top: 0;
+}
+/* --- NOVOS ESTILOS para Páginas de Autenticação (Login/Registro) --- */
+.auth-body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinha no topo */
+    padding-top: 5vh; /* Distância do topo */
+    min-height: 100vh;
+    background-color: var(--background-color);
+    box-sizing: border-box;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.auth-logo {
+    max-width: 200px;
+    margin-bottom: 25px;
+}
+
+.auth-form {
+    background-color: var(--surface-color);
+    padding: 30px 40px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    text-align: left;
+}
+
+.auth-form h2 {
+    text-align: center;
+    font-family: var(--font-serif);
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+.auth-footer {
+    margin-top: 20px;
+}
+
+.btn-full {
+    width: 100%;
+}
+
+.error {
+    color: var(--primary-color);
+    font-size: 0.9em;
+    display: block;
+    margin-top: 4px;
+}
+/* --- NOVOS ESTILOS PARA ESTATÍSTICAS (v7) --- */
 .stats-container {
+    width: 100%;
+}
+
+.stats-filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+}
+
+.btn-filter {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted-color);
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-weight: 700;
+}
+
+.btn-filter:hover {
+    background-color: #f1f1f1;
+    border-color: #ccc;
+    color: var(--text-color);
+}
+
+.btn-filter.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.stats-summary {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.stats-summary h2 {
+    font-family: var(--font-serif);
+    font-size: 1.8em;
+    color: var(--text-color);
+}
+
+.stats-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
 }
-.chart-container {
-    background: #fff; padding: 20px; border: 1px solid var(--border-color); border-radius: 5px;
+
+.stats-card {
+    background-color: var(--surface-color);
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
 }
-.chart-container-full {
-    grid-column: 1 / -1;
-    background: #fff; padding: 20px; border: 1px solid var(--border-color); border-radius: 5px;
+
+.stats-card h3 {
+    font-family: var(--font-serif);
+    margin-top: 0;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
 }
+
+.stats-list {
+    list-style-type: none;
+    padding: 0;
+    counter-reset: item-counter;
+}
+
+.stats-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f1f1;
+    font-size: 1.1em;
+}
+
+.stats-list li:before {
+    content: counter(item-counter);
+    counter-increment: item-counter;
+    font-weight: 700;
+    font-size: 1.2em;
+    color: var(--text-muted-color);
+    margin-right: 15px;
+}
+
+.stats-list li .item-name {
+    font-weight: 700;
+}
+
+.stats-list li .item-count {
+    color: var(--text-muted-color);
+    font-size: 0.9em;
+}
+
+.stats-list li:last-child {
+    border-bottom: none;
+}
+
+.stats-loading {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-muted-color);
+}
+
+/* --- ESTILO PARA O MENU LATERAL --- */
+.no-fics-message {
+    padding: 10px;
+    font-style: italic;
+    color: var(--text-muted-color);
+}
+.no-fics-message span {
+    display: block;
+    margin-bottom: 10px;
+}
+.btn-small {
+    padding: 4px 10px;
+    font-size: 0.9em;
+}
+

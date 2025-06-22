@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vindo(a) ao Shiplog</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Nunito+Sans:opsz,wght@6..12,400;6..12,700&display=swap" rel="stylesheet">
+</head>
+<body class="home-body">
+    <div class="home-container">
+        <img src="{{ url_for('static', filename='img/shiplog.png') }}" alt="Shiplog Logo" class="home-logo">
+        <p class="home-quote">“Meus livros favoritos não estão nas livrarias. Estão nas tags do AO3.”</p>
+        <div class="home-actions">
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('library') }}" class="btn btn-primary">Aceder à minha Biblioteca</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="btn btn-primary">Entrar</a>
+                <a href="{{ url_for('register') }}" class="btn btn-secondary">Criar Conta</a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

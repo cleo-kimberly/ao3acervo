@@ -1,23 +1,30 @@
 <aside class="sidebar">
-    <h2>Sua Biblioteca</h2>
+    <div class="sidebar-header">
+      <a href="{{ url_for('library') }}" class="sidebar-logo">
+        <img src="{{ url_for('static', filename='img/shiplog.png') }}" alt="Shiplog Logo">
+      </a>
+    </div>
     <nav class="fandom-nav">
         <ul>
             {% for fandom, relationships in sidebar_data|dictsort %}
                 <li>
-                    <span class="fandom-name">{{ fandom }}</span>
-                    <ul class="relationship-list">
-                        {% for relationship, fics in relationships|dictsort %}
-                            <li>
-                                <a href="{{ url_for('index', fandom=fandom, relationship=relationship) }}">{{ relationship }} ({{ fics|length }})</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                    <details open>
+                        <summary>{{ fandom }}</summary>
+                        <ul class="relationship-list">
+                            {% for relationship, fics in relationships|dictsort %}
+                                <li>
+                                    <a href="{{ url_for('library', fandom=fandom, relationship=relationship) }}">{{ relationship }} <span>{{ fics|length }}</span></a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </details>
                 </li>
             {% else %}
-                <li>Nenhuma fanfic na biblioteca.</li>
+                <li class="no-fics-message">
+                    <span>Nenhuma fic na biblioteca.</span>
+                    <a href="{{ url_for('add_fic') }}" class="btn btn-secondary btn-small">Adicionar</a>
+                </li>
             {% endfor %}
         </ul>
     </nav>
 </aside>
-
-

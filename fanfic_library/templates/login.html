@@ -1,24 +1,48 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} | Shiplog</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Nunito+Sans:opsz,wght@6..12,400;6..12,700&display=swap" rel="stylesheet">
+</head>
+<body class="auth-body">
+    <div class="auth-container">
+        <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='img/shiplog.png') }}" alt="Shiplog Logo" class="auth-logo"></a>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
 
-{% block title %}Login{% endblock %}
-{% block header %}Acesse sua Biblioteca{% endblock %}
-
-{% block content %}
-<div class="auth-form">
-    <form method="POST" action="">
-        {{ form.hidden_tag() }}
-        <div class="form-group">
-            {{ form.username.label }}
-            {{ form.username(class="form-control") }}
+        <div class="auth-form">
+            <h2>Acesse sua Biblioteca</h2>
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    {{ form.username.label }}
+                    {{ form.username(class="form-control", placeholder="Seu nome de usuário") }}
+                    {% for error in form.username.errors %}<span class="error">{{ error }}</span>{% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.password.label }}
+                    {{ form.password(class="form-control", placeholder="Sua senha") }}
+                    {% for error in form.password.errors %}<span class="error">{{ error }}</span>{% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-primary btn-full") }}
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-            {{ form.password.label }}
-            {{ form.password(class="form-control") }}
+        <div class="auth-footer">
+            <p>Não tem uma conta? <a href="{{ url_for('register') }}">Registre-se</a></p>
         </div>
-        <div class="form-group">
-            {{ form.submit(class="btn btn-primary") }}
-        </div>
-    </form>
-    <p>Não tem uma conta? <a href="{{ url_for('register') }}">Registre-se</a></p>
-</div>
-{% endblock %}
+    </div>
+</body>
+</html>

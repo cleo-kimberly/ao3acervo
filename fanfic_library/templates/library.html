@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {% if selected_fandom %}
+        {{ selected_fandom }}{% if selected_relationship %} / {{ selected_relationship }}{% endif %}
+    {% else %}
+        Toda a Biblioteca
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="fic-list">
+        {% for fic in fics %}
+            <div class="fic-card">
+                <div class="fic-card-main">
+                    <div class="fic-rating">
+                        {% for i in range(1, 6) %}
+                            <span class="star {% if fic.rating and i <= fic.rating %}filled{% endif %}">&#9733;</span>
+                        {% endfor %}
+                    </div>
+                    <h3 class="fic-title"><a href="{{ fic.source_url }}" target="_blank" title="Ler no site original">{{ fic.title }}</a></h3>
+                    <p class="fic-author">por {{ fic.author }}</p>
+                    <p class="fic-fandoms"><strong>Fandoms:</strong> {{ fic.fandom }}</p>
+
+                    {% if fic.date_read or fic.comment %}
+                    <div class="fic-user-details">
+                        {% if fic.date_read %}
+                            <p class="fic-date-read"><strong>Lido em:</strong> {{ fic.date_read.strftime('%d/%m/%Y') }}</p>
+                        {% endif %}
+                        {% if fic.comment %}
+                            <blockquote class="fic-comment">{{ fic.comment }}</blockquote>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    
+                    <p class="fic-tags"><em>{{ fic.tags or 'Sem tags' }}</em></p>
+                </div>
+                <div class="fic-card-actions">
+                    <a href="{{ url_for('fic_details', fic_id=fic.id) }}" class="btn btn-secondary">Editar Detalhes</a>
+                </div>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <h3>Sua biblioteca está vazia.</h3>
+                <p>Use o botão abaixo para catalogar sua primeira fanfic.</p>
+                <a href="{{ url_for('add_fic') }}" class="btn btn-primary">Adicionar Fanfic</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+

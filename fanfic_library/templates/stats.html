@@ -1,72 +1,78 @@
 {% extends "base.html" %}
 
 {% block title %}Estatísticas{% endblock %}
-{% block header %}Estatísticas de Leitura{% endblock %}
+{% block header %}Suas Estatísticas de Leitura{% endblock %}
 
 {% block content %}
 <div class="stats-container">
-    <div class="chart-container">
-        <h3>Top 10 Fandoms</h3>
-        <canvas id="fandomsChart"></canvas>
+    <div class="stats-filters">
+        <button class="btn-filter active" data-period="week">Últimos 7 dias</button>
+        <button class="btn-filter" data-period="month">Últimos 30 dias</button>
+        <button class="btn-filter" data-period="year">Último ano</button>
+        <button class="btn-filter" data-period="all">Todo o período</button>
     </div>
-    <div class="chart-container">
-        <h3>Top 10 Relacionamentos</h3>
-        <canvas id="shipsChart"></canvas>
-    </div>
-    <div class="chart-container-full">
-        <h3>Leituras ao Longo do Tempo</h3>
-        <canvas id="readingsChart"></canvas>
+
+    <div id="stats-results">
+        <div class="stats-loading">
+            <p>A carregar estatísticas...</p>
+        </div>
+        <!-- Os resultados serão inseridos aqui pelo JavaScript -->
     </div>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    fetch("{{ url_for('stats_data') }}")
-    .then(response => response.json())
-    .then(data => {
-        // Gráfico de Fandoms
-        new Chart(document.getElementById('fandomsChart'), {
-            type: 'bar',
-            data: {
-                labels: data.top_fandoms.labels,
-                datasets: [{
-                    label: 'Nº de Fics',
-                    data: data.top_fandoms.data,
-                    backgroundColor: '#990000'
-                }]
-            },
-            options: { indexAxis: 'y', responsive: true }
-        });
+    const filterButtons = document.querySelectorAll('.btn-filter');
+    const resultsContainer = document.getElementById('stats-results');
 
-        // Gráfico de Relacionamentos
-        new Chart(document.getElementById('shipsChart'), {
-            type: 'bar',
-            data: {
-                labels: data.top_ships.labels,
-                datasets: [{
-                    label: 'Nº de Fics',
-                    data: data.top_ships.data,
-                    backgroundColor: '#550000'
-                }]
-            },
-            options: { indexAxis: 'y', responsive: true }
-        });
+    function fetchAndDisplayStats(period = 'week') {
+        // Mostra a mensagem de "a carregar"
+        resultsContainer.innerHTML = '<div class="stats-loading"><p>A carregar estatísticas...</p></div>';
 
-        // Gráfico de Leituras por Tempo
-        new Chart(document.getElementById('readingsChart'), {
-            type: 'line',
-            data: {
-                labels: data.readings_over_time.labels,
-                datasets: [{
-                    label: 'Fics Lidas por Mês',
-                    data: data.readings_over_time.data,
-                    borderColor: '#990000',
-                    tension: 0.1
-                }]
-            },
-            options: { responsive: true }
+        fetch(`/stats/data?period=${period}`)
+            .then(response => response.json())
+            .then(data => {
+                let content = `
+                    <div class="stats-summary">
+                        <h2>Fics lidas no período: ${data.total_read}</h2>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stats-card">
+                            <h3>Top 5 Fandoms</h3>
+                            <ol class="stats-list">
+                                ${data.top_fandoms.map(item => `<li><span class="item-name">${item.name}</span> <span class="item-count">${item.count} fics</span></li>`).join('') || '<li>Nenhum fandom lido neste período.</li>'}
+                            </ol>
+                        </div>
+                        <div class="stats-card">
+                            <h3>Top 5 Ships</h3>
+                            <ol class="stats-list">
+                                ${data.top_ships.map(item => `<li><span class="item-name">${item.name}</span> <span class="item-count">${item.count} fics</span></li>`).join('') || '<li>Nenhum ship lido neste período.</li>'}
+                            </ol>
+                        </div>
+                    </div>
+                `;
+                resultsContainer.innerHTML = content;
+            })
+            .catch(error => {
+                resultsContainer.innerHTML = '<p class="error">Ocorreu um erro ao carregar as estatísticas.</p>';
+                console.error('Error fetching stats:', error);
+            });
+    }
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove a classe 'active' de todos os botões
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Adiciona a classe 'active' ao botão clicado
+            button.classList.add('active');
+            
+            const period = button.dataset.period;
+            fetchAndDisplayStats(period);
         });
     });
+
+    // Carrega as estatísticas da semana por padrão
+    fetchAndDisplayStats('week');
 });
 </script>
 {% endblock %}
