@@ -1,0 +1,223 @@
+/* Estilo geral inspirado no AO3 */
+:root {
+    --primary-color: #990000;
+    --background-color: #f5f5f5;
+    --text-color: #333;
+    --border-color: #ddd;
+    --header-bg: #fff;
+    --sidebar-bg: #fff;
+    --font-serif: 'Lora', 'Georgia', serif;
+}
+
+body {
+    font-family: var(--font-serif);
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    display: flex;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* --- Layout Principal --- */
+.sidebar {
+    width: 280px;
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    padding: 20px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    overflow-y: auto;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px 40px;
+}
+
+.main-header {
+    background: var(--header-bg);
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--primary-color);
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-header h1 {
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.main-header nav a {
+    margin-left: 20px;
+}
+
+/* --- Menu Lateral (Sidebar) --- */
+.sidebar h2 {
+    color: var(--primary-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+.fandom-nav ul {
+    list-style: none;
+    padding: 0;
+}
+.fandom-nav .fandom-name {
+    font-weight: bold;
+    font-size: 1.1em;
+    cursor: pointer;
+    display: block;
+    margin-top: 15px;
+}
+.fandom-nav .relationship-list {
+    padding-left: 15px;
+    margin-top: 5px;
+}
+.fandom-nav .relationship-list li a {
+    font-size: 0.95em;
+}
+
+/* --- Lista de Fics (Página Index) --- */
+.fic-list {
+    list-style: none;
+    padding: 0;
+}
+.fic-list li {
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+.fic-list .fic-title {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.fic-list .fic-author {
+    margin-left: 10px;
+    font-style: italic;
+    color: #555;
+}
+
+/* --- Visualização da Fic --- */
+.fic-container {
+    background-color: #fff;
+    padding: 30px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+}
+.fic-meta, .user-details {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+.fic-meta h3, .fic-meta h4, .user-details h4 {
+    margin-top: 0;
+    color: var(--primary-color);
+}
+.fic-meta .tags {
+    font-style: italic;
+    color: #666;
+}
+.fic-meta .summary {
+    border-left: 3px solid var(--border-color);
+    padding-left: 15px;
+    font-style: italic;
+}
+.fic-content {
+    font-size: 1.1em;
+    line-height: 1.7;
+}
+
+/* --- Formulários --- */
+.auth-form, .add-fic-forms .form-container {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 30px;
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+}
+.add-fic-forms {
+    max-width: 100%;
+}
+.add-fic-forms .form-container { margin: 20px 0; }
+.form-group {
+    margin-bottom: 15px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    margin-top: 20px;
+}
+
+/* --- Alertas/Flash Messages --- */
+.flash-messages {
+    padding: 0;
+    margin-bottom: 20px;
+}
+.alert {
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.alert-success { color: #155724; background-color: #d4edda; border-color: #c3e6cb; }
+.alert-danger { color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; }
+.alert-info { color: #0c5460; background-color: #d1ecf1; border-color: #bee5eb; }
+
+/* --- Estatísticas --- */
+.stats-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.chart-container {
+    background: #fff; padding: 20px; border: 1px solid var(--border-color); border-radius: 5px;
+}
+.chart-container-full {
+    grid-column: 1 / -1;
+    background: #fff; padding: 20px; border: 1px solid var(--border-color); border-radius: 5px;
+}

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Estatísticas{% endblock %}
+{% block header %}Estatísticas de Leitura{% endblock %}
+
+{% block content %}
+<div class="stats-container">
+    <div class="chart-container">
+        <h3>Top 10 Fandoms</h3>
+        <canvas id="fandomsChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <h3>Top 10 Relacionamentos</h3>
+        <canvas id="shipsChart"></canvas>
+    </div>
+    <div class="chart-container-full">
+        <h3>Leituras ao Longo do Tempo</h3>
+        <canvas id="readingsChart"></canvas>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    fetch("{{ url_for('stats_data') }}")
+    .then(response => response.json())
+    .then(data => {
+        // Gráfico de Fandoms
+        new Chart(document.getElementById('fandomsChart'), {
+            type: 'bar',
+            data: {
+                labels: data.top_fandoms.labels,
+                datasets: [{
+                    label: 'Nº de Fics',
+                    data: data.top_fandoms.data,
+                    backgroundColor: '#990000'
+                }]
+            },
+            options: { indexAxis: 'y', responsive: true }
+        });
+
+        // Gráfico de Relacionamentos
+        new Chart(document.getElementById('shipsChart'), {
+            type: 'bar',
+            data: {
+                labels: data.top_ships.labels,
+                datasets: [{
+                    label: 'Nº de Fics',
+                    data: data.top_ships.data,
+                    backgroundColor: '#550000'
+                }]
+            },
+            options: { indexAxis: 'y', responsive: true }
+        });
+
+        // Gráfico de Leituras por Tempo
+        new Chart(document.getElementById('readingsChart'), {
+            type: 'line',
+            data: {
+                labels: data.readings_over_time.labels,
+                datasets: [{
+                    label: 'Fics Lidas por Mês',
+                    data: data.readings_over_time.data,
+                    borderColor: '#990000',
+                    tension: 0.1
+                }]
+            },
+            options: { responsive: true }
+        });
+    });
+});
+</script>
+{% endblock %}

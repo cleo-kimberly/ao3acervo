@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title or 'Biblioteca de Fanfics' }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Georgia&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        {% if current_user.is_authenticated %}
+            {% include '_sidebar.html' %}
+        {% endif %}
+
+        <main class="main-content">
+            <header class="main-header">
+                <h1>{% block header %}{{ title or 'Bem-vindo(a)!' }}{% endblock %}</h1>
+                {% if current_user.is_authenticated %}
+                    <nav>
+                        <a href="{{ url_for('index') }}">Início</a>
+                        <a href="{{ url_for('add_fic') }}">Adicionar Fic</a>
+                        <a href="{{ url_for('stats') }}">Estatísticas</a>
+                        <a href="{{ url_for('logout') }}">Sair ({{ current_user.username }})</a>
+                    </nav>
+                {% endif %}
+            </header>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <div class="content">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {% if selected_fandom %}
+        {{ selected_fandom }} / {{ selected_relationship }}
+    {% else %}
+        Bem-vindo(a) à sua Biblioteca!
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if not selected_fandom %}
+        <p>Selecione um fandom e um relacionamento no menu à esquerda para ver as fanfics.</p>
+    {% elif fics %}
+        <ul class="fic-list">
+            {% for fic in fics %}
+                <li>
+                    <a href="{{ url_for('view_fic', fic_id=fic.id) }}" class="fic-title">{{ fic.title }}</a>
+                    <span class="fic-author">por {{ fic.author }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nenhuma fanfic encontrada para esta seleção.</p>
+    {% endif %}
+{% endblock %}

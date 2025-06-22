@@ -1,0 +1,23 @@
+<aside class="sidebar">
+    <h2>Sua Biblioteca</h2>
+    <nav class="fandom-nav">
+        <ul>
+            {% for fandom, relationships in sidebar_data|dictsort %}
+                <li>
+                    <span class="fandom-name">{{ fandom }}</span>
+                    <ul class="relationship-list">
+                        {% for relationship, fics in relationships|dictsort %}
+                            <li>
+                                <a href="{{ url_for('index', fandom=fandom, relationship=relationship) }}">{{ relationship }} ({{ fics|length }})</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% else %}
+                <li>Nenhuma fanfic na biblioteca.</li>
+            {% endfor %}
+        </ul>
+    </nav>
+</aside>
+
+
