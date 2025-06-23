@@ -67,5 +67,3 @@ O objetivo do Shiplog é fornecer uma biblioteca pessoal para fãs de fanfics, p
 - Python 3.10+
 - Pip
 
-## Licença
-Este projeto é para fins educacionais e pessoais.
